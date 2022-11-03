@@ -4,13 +4,10 @@ import { useEffect } from 'react';
 import defaultValues from '../mock/defaultValues';
 import { getLocalStorageItem, setLocalStorageItem } from '../utils/localStorage';
 
-const App = ({ Component, pageProps }: AppProps) => {
 
-  useEffect(() => {
-    if (!getLocalStorageItem('students')) {
-      setLocalStorageItem('students', defaultValues);
-    }
-  }, []);
+
+const App = ({ Component, pageProps }: AppProps) => {
+ 
 
   return <Component {...pageProps} />
 }
