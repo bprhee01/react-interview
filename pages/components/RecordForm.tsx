@@ -15,6 +15,7 @@ export default function RecordForm(props){
             date: new Date()
         }
         await client.records.create('attendance', data);
+        props.toggleRefresh(!props.refresh);
     }
 
     return(

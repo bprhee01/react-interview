@@ -12,7 +12,7 @@ export default function Record(props: any){
     const router = useRouter();
     const removeRecord = async(id: string) => {
         await client.records.delete('attendance', id);
-        // router.refresh();
+        props.toggleRefresh(!props.refresh);
     }
     return(
         <div>

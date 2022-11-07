@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { Container } from '@mui/material';
+import { Container, setRef } from '@mui/material';
 
 import  {useState, useEffect} from 'react';
 import PocketBase from 'pocketbase';
@@ -34,6 +34,7 @@ const StudentPage = () => {
   const [studentInfo, setStudentInfo] = useState({});
   const [attendanceRecords, setAttendanceRecords] = useState([]);
   const [attendanceHours, setAttendanceHours] = useState(0);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const getStudentInfo = async(stuId: string) => {
@@ -50,24 +51,22 @@ const StudentPage = () => {
     if(!id) return;
     getStudentInfo(id);
   
-  }, [id])
+  }, [id,refresh])
 
   return (
     <div>
         <h1> studentId: {id}</h1>
         <h1>name: {studentInfo.fullName} </h1>
         <h1>totalAttendance: {attendanceHours} </h1>
-        <RecordForm studentId={id}/>
+        <RecordForm studentId={id} refresh={refresh} toggleRefresh={setRefresh}/>
         <h1>Attendance Records</h1>
         <Container sx={{
       display: 'flex',
-    //   justifyContent: 'flex-start',
-    //   alignItems: "baseline",
       width: '100vw',
       height: '100vh',
     }}>
 
-        {attendanceRecords.length? <h2>{attendanceRecords.map((attendanceRecord: any, index: number) => <Record id={attendanceRecord.id} date={attendanceRecord.date} hours={attendanceRecord.hours}key={index} />)}</h2> : null}
+        {attendanceRecords.length? <h2>{attendanceRecords.map((attendanceRecord: any, index: number) => <Record id={attendanceRecord.id} date={attendanceRecord.date} hours={attendanceRecord.hours} refresh={refresh} toggleRefresh={setRefresh} key={index} />)}</h2> : null}
     </Container>
     </div>
 
